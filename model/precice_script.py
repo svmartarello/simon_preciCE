@@ -193,9 +193,6 @@ def main():
         out_dir=project_directory,
     )
 
-    # ← ADD THIS: filter regulons by size before learning weights
-    from pyscenic_utils import save_regulons
-    save_regulons(dataset_stem, min_targets=10, max_targets=None)     #######upated 2026_03_26, use function in pysenic_utils to save regulon file and remove tfs with less tahn 10 min targets
     
     # Learn edge weights
     print("[INFO] Learning network edge weights...")
