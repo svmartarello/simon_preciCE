@@ -160,3 +160,20 @@ def solve(A,B, expression, lambdas, positive=False):
              warnings.simplefilter("ignore", category=pd.errors.PerformanceWarning)
              exp_df[str(l)] = solve_lasso(A,B, lamb=l, positive=positive)
     return exp_df
+
+def filter_regulons(reg_path, min_targets=None, max_targets=None):
+    removed = 0
+    kept = 0
+    for tf_file in os.listdir(reg_path):
+        filepath = os.path.join(reg_path, tf_file)
+        with open(filepath, 'r') as f:
+            targets = [line.strip() for line in f if line.strip()]
+        n = len(targets)
+        if (min_targets is not None and n < min_targets) or \
+           (max_targets is not None and n > max_targets):
+            os.remove(filepath)
+            removed += 1
+        else:
+            kept += 1
+    print(f"Regulon size filter: kept {kept}, removed {removed}")
+
